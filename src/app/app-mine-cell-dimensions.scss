@@ -1,0 +1,64 @@
+.mine-field-container {
+    width: 960px;
+    height: 480px;
+    &.Easy {
+        .mine-row {
+            height: 60px;
+            .mine-cell-container {
+                width: 60px;
+                height: 60px;
+                .mine-cell {
+                    width: 60px;
+                    height: 60px;
+                    .display-table-cell {
+                        font-size: xx-large;
+                        &.marked, &.mine {
+                            width: 60px;
+                            height: 60px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    &.Medium {
+        .mine-row {
+            height: 48px;
+            .mine-cell-container {
+                width: 48px;
+                height: 48px;
+                .mine-cell {
+                    width: 48px;
+                    height: 48px;
+                    .display-table-cell {
+                        font-size: x-large;
+                        &.marked, &.mine {
+                            width: 48px;
+                            height: 48px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    &.Hard {
+        .mine-row {
+            height: 32px;
+            .mine-cell-container {
+                width: 32px;
+                height: 32px;
+                .mine-cell {
+                    width: 32px;
+                    height: 32px;
+                    .display-table-cell {
+                        font-size: large;
+                        &.marked, &.mine {
+                            width: 32px;
+                            height: 32px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

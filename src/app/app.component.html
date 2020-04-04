@@ -1,0 +1,39 @@
+<mat-toolbar color="accent">
+    <mat-toolbar-row>
+        <span>Minesweeper</span>
+        <button mat-button (click)="openInstructionsDialog()">How to Play</button>
+        <button mat-button (click)="resetGame()">Reset</button>
+        <button mat-button [matMenuTriggerFor]="menu">{{ selectedDifficulty }}</button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="setDifficulty('Easy')">Easy</button>
+            <button mat-menu-item (click)="setDifficulty('Medium')">Medium</button>
+            <button mat-menu-item (click)="setDifficulty('Hard')">Hard</button>
+        </mat-menu> 
+        <span>{{ totalMinesRemaining }}</span>
+        <span class="stopwatch"></span>
+      </mat-toolbar-row>
+</mat-toolbar>
+<div class="mine-field-container {{selectedDifficulty}}" [ngClass]="{'disable-all-events': gameOver}">
+    <div *ngFor="let row of mine.rows; let i=index" class="mine-row">
+        <span *ngFor="let column of row.columns; let j=index" (contextmenu)="false" class="mine-cell-container">
+            <span *ngIf="!column.isOpened && !column.containsMine" (click)="openMineBox(i, j)" (contextmenu)="toggleMarked(i, j)" class="mine-cell not-opened display-table">
+                <span class="display-table-cell" [class.marked]="column.isMarked">{{column.content}}</span>
+            </span>
+            <span *ngIf="column.isOpened" class="mine-cell opened display-table">
+                <span class="display-table-cell number-{{column.content}}">{{column.content}}</span>
+            </span>
+            <span *ngIf="column.isOpened && column.containsMine" class="mine-cell detonated display-table">
+                <span class="display-table-cell mine">{{column.content}}</span>
+            </span>
+            <span *ngIf="!column.isOpened && !gameOver" (click)="openMineBox(i, j)" class="mine-cell not-opened display-table">
+                <span class="display-table-cell" [class.mine]="column.containsMine"></span>
+            </span>
+        </span>
+    </div>
+</div>
+
+<div *ngIf="gameOver">Game Over!!!</div>
+<!-- 
+    Key Points: 
+    1: (contextmenu)="false" dsiables browser context-menu, while still allowing the event
+ -->

@@ -1,0 +1,50 @@
+@import './app-mine-checker-style.scss';
+@import './app-mine-cell-dimensions.scss';
+@import './app-mine-number-colors.scss';
+.mine-cell-container {
+    display: inline-flex;
+}
+.mine-cell {
+    position: fixed;
+    &.detonated {
+        background-color: crimson;
+    }
+}
+
+.stopwatch {
+    content: url('../assets/icons8-timer-64.png');
+    width: 32px;
+    height: 32px;
+    margin-left: 16px;
+}
+
+.display-table {
+    display: table;
+    .display-table-cell {
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+        font-weight: bolder;
+        &.marked {
+            content: url('../assets/icons8-flag-filled-64.png');
+        }
+        &.mine {
+            content: url('../assets/icons8-naval-mine-100.png');
+        }
+    }
+}
+
+.disable-all-events {
+    pointer-events: none;
+}
+
+.mine-field-container {
+    width: max-content;
+    height: max-content;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
