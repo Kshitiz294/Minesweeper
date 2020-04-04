@@ -25,13 +25,6 @@ export class AppComponent implements OnInit {
 
   public ngOnInit(): void {
     this.resetGame();
-    this.timer = 0;
-    this.timerInterval = setInterval(
-      () => {
-        this.timer = this.timer + 1;
-      },
-      1000
-    );
   }
 
   public openInstructionsDialog(): void {
@@ -47,6 +40,16 @@ export class AppComponent implements OnInit {
     this.gameOver = false;
     const selectedDifficultySetting = gameModes[this.selectedDifficulty];
     this.setUpGame(selectedDifficultySetting.rows, selectedDifficultySetting.columns, selectedDifficultySetting.mines);
+    if (this.timerInterval) {
+      clearInterval(this.timerInterval);
+    }
+    this.timerInterval = setInterval(
+      () => {
+        this.timer = this.timer + 1;
+      },
+      1000
+    );
+    this.timer = 0;
   }
 
   public openMineBox(rowIndex: number, columnIndex: number): void {
