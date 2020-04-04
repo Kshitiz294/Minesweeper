@@ -16,6 +16,8 @@ export class AppComponent implements OnInit {
   public totalBoxesToBeOpened: number;
   public totalMinesRemaining: number;
   public selectedDifficulty = 'Easy';
+  public timer = 0;
+  public timerInterval;
 
   private mineLocations: RowColumnArray;
 
@@ -23,6 +25,13 @@ export class AppComponent implements OnInit {
 
   public ngOnInit(): void {
     this.resetGame();
+    this.timer = 0;
+    this.timerInterval = setInterval(
+      () => {
+        this.timer = this.timer + 1;
+      },
+      1000
+    );
   }
 
   public openInstructionsDialog(): void {
@@ -48,6 +57,7 @@ export class AppComponent implements OnInit {
     // If the box contains mine, then its game-over
     if (this.mine.rows[rowIndex].columns[columnIndex].containsMine) {
       this.gameOver = true;
+      clearInterval(this.timerInterval);
       return;
     }
     // Now we have one less mine box to be opened
@@ -143,6 +153,7 @@ export class AppComponent implements OnInit {
   private checkIfgameOver(): void {
     if (this.totalBoxesToBeOpened === 0 && this.totalMinesRemaining === 0) {
       this.gameOver = true;
+      clearInterval(this.timerInterval);
     } else {
       this.gameOver = false;
     }

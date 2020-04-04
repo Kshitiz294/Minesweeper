@@ -11,22 +11,20 @@
         </mat-menu> 
         <span>{{ totalMinesRemaining }}</span>
         <span class="stopwatch"></span>
+        <span>{{timer}}</span>
       </mat-toolbar-row>
 </mat-toolbar>
 <div class="mine-field-container {{selectedDifficulty}}" [ngClass]="{'disable-all-events': gameOver}">
     <div *ngFor="let row of mine.rows; let i=index" class="mine-row">
         <span *ngFor="let column of row.columns; let j=index" (contextmenu)="false" class="mine-cell-container">
-            <span *ngIf="!column.isOpened && !column.containsMine" (click)="openMineBox(i, j)" (contextmenu)="toggleMarked(i, j)" class="mine-cell not-opened display-table">
-                <span class="display-table-cell" [class.marked]="column.isMarked">{{column.content}}</span>
+            <span *ngIf="!column.isOpened" (click)="openMineBox(i, j)" (contextmenu)="toggleMarked(i, j)" class="mine-cell not-opened display-table">
+                <span class="display-table-cell" [class.marked]="column.isMarked" [class.mine]="column.containsMine && !column.isMarked">{{column.content}}</span>
             </span>
             <span *ngIf="column.isOpened" class="mine-cell opened display-table">
                 <span class="display-table-cell number-{{column.content}}">{{column.content}}</span>
             </span>
             <span *ngIf="column.isOpened && column.containsMine" class="mine-cell detonated display-table">
                 <span class="display-table-cell mine">{{column.content}}</span>
-            </span>
-            <span *ngIf="!column.isOpened && !gameOver" (click)="openMineBox(i, j)" class="mine-cell not-opened display-table">
-                <span class="display-table-cell" [class.mine]="column.containsMine"></span>
             </span>
         </span>
     </div>
