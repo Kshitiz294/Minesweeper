@@ -30,7 +30,8 @@
     </div>
 </div>
 
-<div *ngIf="gameOver">Game Over!!!</div>
+<div *ngIf="gameOver && !revealMineLocations" class="game-over-banner">Game Over, You Win!!!</div>
+<div *ngIf="gameOver && revealMineLocations" class="game-over-banner">Game Over, You Lose!!!</div>
 <!-- 
     Key Points: 
     1: (contextmenu)="false" dsiables browser context-menu, while still allowing the event
