@@ -18,6 +18,7 @@ export class AppComponent implements OnInit {
   public selectedDifficulty = 'Easy';
   public timer = 0;
   public timerInterval;
+  public revealMineLocations = false;
 
   private mineLocations: RowColumnArray;
 
@@ -38,6 +39,7 @@ export class AppComponent implements OnInit {
 
   public resetGame(): void {
     this.gameOver = false;
+    this.revealMineLocations = false;
     const selectedDifficultySetting = gameModes[this.selectedDifficulty];
     this.setUpGame(selectedDifficultySetting.rows, selectedDifficultySetting.columns, selectedDifficultySetting.mines);
     if (this.timerInterval) {
@@ -59,8 +61,7 @@ export class AppComponent implements OnInit {
     this.mine.rows[rowIndex].columns[columnIndex].isOpened = true;
     // If the box contains mine, then its game-over
     if (this.mine.rows[rowIndex].columns[columnIndex].containsMine) {
-      this.gameOver = true;
-      clearInterval(this.timerInterval);
+      this.gameOverAndPlayerLost();
       return;
     }
     // Now we have one less mine box to be opened
@@ -81,11 +82,16 @@ export class AppComponent implements OnInit {
 
   public toggleMarked(rowIndex: number, columnIndex: number): void {
     this.mine.rows[rowIndex].columns[columnIndex].isMarked = !this.mine.rows[rowIndex].columns[columnIndex].isMarked;
-    this.mine.rows[rowIndex].columns[columnIndex].content = this.mine.rows[rowIndex].columns[columnIndex].isMarked ? 'M' : '';
     this.totalMinesRemaining = this.totalMinesRemaining -  (this.mine.rows[rowIndex].columns[columnIndex].isMarked ? +1 : -1);
 
     // Check if game is over
     this.checkIfgameOver();
+  }
+
+  private gameOverAndPlayerLost(): void {
+    this.gameOver = true;
+    this.revealMineLocations = true;
+    clearInterval(this.timerInterval);
   }
 
   private setUpGame(nRows: number, nColumns: number, nMines: number): void {
@@ -107,7 +113,6 @@ export class AppComponent implements OnInit {
       } else {
           this.mine.rows[rowIndex].columns[columnIndex].containsMine = true;
           this.mineLocations.rowColumnArray.push(new RowColumn(rowIndex, columnIndex));
-          this.mine.rows[rowIndex].columns[columnIndex].content = 'X';
       }
     }
     // console.log(this.mineLocations);
