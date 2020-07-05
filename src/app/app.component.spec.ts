@@ -1,5 +1,6 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { MatMenuModule, MatToolbarModule, MatDialogModule, MatDialogRef } from '@angular/material';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -7,6 +8,11 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent
       ],
+      imports: [
+        MatMenuModule,
+        MatToolbarModule,
+        MatDialogModule
+      ]
     }).compileComponents();
   }));
 
@@ -16,16 +22,19 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'Minesweeper'`, () => {
+  it('setDifficulty() should correctly change difficulty', () => {
     const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('Minesweeper');
+    const app = fixture.componentInstance;
+    app.setDifficulty('Medium');
+    expect(app.selectedDifficulty).toEqual('Medium');
   });
 
-  it('should render title', () => {
+  it('resetGame() should reset all variables', () => {
     const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('Minesweeper app is running!');
+    const app = fixture.componentInstance;
+    app.setDifficulty('Medium');
+    expect(app.selectedDifficulty).toEqual('Medium');
+    expect(app.gameOver).toEqual(false);
+    expect(app.revealMineLocations).toEqual(false);
   });
 });
