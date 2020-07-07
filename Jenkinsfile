@@ -13,7 +13,8 @@ node {
         //  }
     
         // This is used to run build pipeline commands inside a nodejs docker container
-        def myTestContainer = docker.image('cronn/nodejs-chrome-firefox:lts_chrome')
+        // Working docker image: cronn/nodejs-chrome-firefox:lts_chrome
+        def myTestContainer = docker.image('ksgupta294/nodejs-chrome:test')
         myTestContainer.pull()
         myTestContainer.inside {
             sh 'npm install'
