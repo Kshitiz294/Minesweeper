@@ -47,6 +47,10 @@ node {
             emailext(body: content, mimeType: 'text/html',
                 replyTo: '$DEFAULT_REPLYTO', subject: subject,
                 to: '$DEFAULT_RECIPIENTS', attachLog: true )
+
+
+            // send slack notification
+            slackSend (color: '#00FF00', message: "SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
         }
     } catch (e) {
         // mark build as failed
@@ -59,6 +63,12 @@ node {
         emailext(body: content, mimeType: 'text/html',
             replyTo: '$DEFAULT_REPLYTO', subject: subject,
             to: '$DEFAULT_RECIPIENTS', attachLog: true )
+
+
+
+        // send slack notification
+        slackSend (color: '#FF0000', message: "FAILURE: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+
 
         // mark current build as a failure and throw the error
         throw e;
